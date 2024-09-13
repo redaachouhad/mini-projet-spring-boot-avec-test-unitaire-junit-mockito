@@ -25,20 +25,24 @@ public class ProductController {
     @GetMapping("/getOneProductById/{id}")
     public ResponseEntity<Product> getOneProductById(@PathVariable("id") Long id) {
         Optional<Product> productRes = productService.getOneProductById(id);
-        return productRes.map(product -> ResponseEntity.status(HttpStatus.OK).body(product)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+        if(productRes.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productRes.get(), HttpStatus.OK);
+
     }
 
     @PostMapping("/addOneProduct")
     public ResponseEntity<String> addOneProduct(@RequestBody Product product) {
         productService.addOneProduct(product);
-        return ResponseEntity.status(HttpStatus.OK).body("Product " + product + " is added successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Product is added successfully");
     }
 
     @PutMapping("/updateOneProduct/{id}")
     public ResponseEntity<String> updateOneProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         boolean updated = productService.updateOneProduct(id, product);
         if (updated) {
-            return ResponseEntity.status(HttpStatus.OK).body("The product with { id : " + id + " }  is updated");
+            return ResponseEntity.status(HttpStatus.OK).body("The product is updated");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The product is not found");
     }
@@ -46,7 +50,7 @@ public class ProductController {
     @DeleteMapping("/deleteOneProduct/{id}")
     public ResponseEntity<String> deleteOneProduct(@PathVariable("id") Long id) {
         productService.deleteOneProduct(id);
-        return ResponseEntity.status(HttpStatus.OK).body("The product with { id : " + id + " } is delete");
+        return ResponseEntity.status(HttpStatus.OK).body("The product is deleted");
 
     }
 
