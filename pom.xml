@@ -30,7 +30,7 @@
 		<java.version>17</java.version>
 		<sonar.organization>redaachouhad</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+<!--		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -131,6 +131,7 @@
 						<configuration>
 							<formats>
 								<format>XML</format>
+								<format>HTML</format>
 							</formats>
 						</configuration>
 					</execution>
